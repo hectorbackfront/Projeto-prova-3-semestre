@@ -1,0 +1,96 @@
+version: "3.9"
+
+# ============================================================
+# REDE CUSTOMIZADA — Bridge com DNS interno (Opção A)
+# Os serviços se comunicam pelo nome (ex: postgres, redis)
+# ============================================================
+networks:
+  app_network:
+    driver: bridge
+
+# ============================================================
+# NAMED VOLUMES — persistência de dados além do ciclo do container
+# ============================================================
+volumes:
+  postgres_data:
+  redis_data:
+
+services:
+
+  # ----------------------------------------------------------
+  # BANCO DE DADOS
+  # ----------------------------------------------------------
+  postgres:
+    image: postgres:16-alpine
+    container_name: agendamento_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: agendamento_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres123
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts/setup.sql:/docker-entrypoint-initdb.d/setup.sql
+    networks:
+      - app_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ----------------------------------------------------------
+  # CACHE (Redis)
+  # ----------------------------------------------------------
+  redis:
+    image: redis:7-alpine
+    container_name: agendamento_redis
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+    networks:
+      - app_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ----------------------------------------------------------
+  # APP NODE.JS — sem porta exposta ao host (privado)
+  # ----------------------------------------------------------
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: agendamento_app
+    restart: unless-stopped
+    env_file:
+      - .env.example
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - app_network
+    # Sem 'ports' — acesso só via Nginx
+
+  # ----------------------------------------------------------
+  # NGINX — proxy reverso, único ponto de entrada externo
+  # ----------------------------------------------------------
+  nginx:
+    image: nginx:alpine
+    container_name: agendamento_nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - app
+    networks:
+      - app_network
