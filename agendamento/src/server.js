@@ -4,6 +4,7 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./config/swagger');
 const logger = require('./middlewares/logger');
 const { sequelize } = require('./models');
+const redis = require('./config/redis');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -34,6 +35,8 @@ app.get('/health', (req, res) => res.json({ status: 'ok' }));
 // ============================================================
 async function iniciar() {
   try {
+    await redis.connect();
+
     await sequelize.authenticate();
     console.log('Banco de dados conectado.');
 

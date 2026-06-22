@@ -1,4 +1,5 @@
 const { Agendamento, Cliente, Usuario, Servico, AgendamentoServico } = require('../models');
+const redis = require('../config/redis');
 
 exports.listar = async (req, res) => {
   try {
@@ -33,11 +34,33 @@ exports.buscar = async (req, res) => {
 };
 
 exports.criar = async (req, res) => {
-  try {
-    const { cliente_id, usuario_id, data_hora, observacao, servico_ids } = req.body;
+  const { cliente_id, usuario_id, data_hora, observacao, servico_ids } = req.body;
 
-    if (!servico_ids || servico_ids.length === 0) {
-      return res.status(400).json({ erro: 'Informe ao menos um serviço' });
+  if (!servico_ids || servico_ids.length === 0) {
+    return res.status(400).json({ erro: 'Informe ao menos um serviço' });
+  }
+
+  // Normaliza para minuto para garantir chave de lock consistente
+  const slotKey = new Date(data_hora).toISOString().slice(0, 16);
+  const lockKey = `lock:agendamento:${usuario_id}:${slotKey}`;
+
+  // SET NX EX — adquire o lock por 10 s; se já existe, outro request chegou primeiro
+  const lock = await redis.set(lockKey, '1', 'NX', 'EX', 10);
+  if (!lock) {
+    return res.status(409).json({ erro: 'Esse horário está sendo reservado agora. Tente em instantes.' });
+  }
+
+  try {
+    // Verifica conflito real no banco (funcionário já tem agendamento ativo nesse slot)
+    const conflito = await Agendamento.findOne({
+      where: {
+        usuario_id,
+        data_hora: new Date(data_hora),
+        status: ['agendado', 'confirmado'],
+      },
+    });
+    if (conflito) {
+      return res.status(409).json({ erro: 'Funcionário já possui agendamento nesse horário.' });
     }
 
     const servicos = await Servico.findAll({ where: { id: servico_ids } });
@@ -47,7 +70,6 @@ exports.criar = async (req, res) => {
       cliente_id, usuario_id, data_hora, observacao, valor_total,
     });
 
-    // Insere na tabela pivô
     await Promise.all(servicos.map(s =>
       AgendamentoServico.create({
         agendamento_id: agendamento.id,
@@ -66,6 +88,9 @@ exports.criar = async (req, res) => {
     res.status(201).json(resultado);
   } catch (err) {
     res.status(500).json({ erro: err.message });
+  } finally {
+    // Libera o lock independente de sucesso ou erro
+    await redis.del(lockKey);
   }
 };
 
@@ -92,7 +117,6 @@ exports.deletar = async (req, res) => {
   }
 };
 
-// Rota extra: adicionar serviço a agendamento (relação N:N)
 exports.adicionarServico = async (req, res) => {
   try {
     const { agendamento_id, servico_id } = req.params;
