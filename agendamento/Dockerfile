@@ -26,6 +26,8 @@ COPY --from=builder /app/node_modules ./node_modules
 
 # Copia código-fonte
 COPY src/ ./src/
+COPY command.js ./
+COPY _web.js ./
 COPY package*.json ./
 
 # Ajusta permissões
@@ -35,4 +37,4 @@ USER appuser
 
 EXPOSE 3000
 
-CMD ["node", "src/server.js"]
+CMD ["node", "_web.js"]
