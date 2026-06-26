@@ -41,15 +41,16 @@ cd agendamento
 **2. Suba todos os containers:**
 
 ```bash
-docker compose up --build
+docker compose up --build -d
 ```
 
-Aguarde as mensagens:
+Aguarde os containers ficarem saudáveis (cerca de 15 segundos) e confirme:
+
+```bash
+docker compose ps
 ```
-Banco de dados conectado.
-Modelos sincronizados.
-Servidor rodando na porta 3000
-```
+
+Todos devem aparecer como `Running` ou `Healthy`.
 
 **3. A API estará disponível em:**
 
@@ -73,7 +74,9 @@ docker compose down -v
 
 ## Como executar as migrations
 
-Com os containers rodando, execute dentro do container da aplicação:
+> **O banco já é inicializado automaticamente com tabelas e dados de seed ao subir os containers — não é necessário rodar migrate em uma instalação limpa.**
+
+Os comandos abaixo são úteis apenas em desenvolvimento, quando há mudanças no modelo:
 
 ```bash
 docker compose exec app node command.js migrate
