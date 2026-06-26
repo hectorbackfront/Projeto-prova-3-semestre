@@ -21,7 +21,7 @@ services:
   # BANCO DE DADOS
   # ----------------------------------------------------------
   postgres:
-    image: postgres:16-alpine
+    image: postgres:17-alpine
     container_name: agendamento_postgres
     restart: unless-stopped
     environment:
@@ -30,7 +30,8 @@ services:
       POSTGRES_PASSWORD: postgres123
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./scripts/setup.sql:/docker-entrypoint-initdb.d/setup.sql
+      - ./scripts/setup.sql:/docker-entrypoint-initdb.d/01_setup.sql
+      - ./scripts/seed/seed.sql:/docker-entrypoint-initdb.d/02_seed.sql
     networks:
       - app_network
     healthcheck:

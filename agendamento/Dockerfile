@@ -1,7 +1,7 @@
 # ============================================================
 # STAGE 1: builder — instala dependências e prepara o app
 # ============================================================
-FROM node:20-alpine AS builder
+FROM node:24-alpine AS builder
 
 WORKDIR /app
 
@@ -14,7 +14,7 @@ RUN npm install --omit=dev
 # ============================================================
 # STAGE 2: runtime — imagem final leve e segura
 # ============================================================
-FROM node:20-alpine AS runtime
+FROM node:24-alpine AS runtime
 
 WORKDIR /app
 
