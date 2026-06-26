@@ -6,6 +6,17 @@
 -- Cria extensão para UUID (opcional, usando SERIAL aqui)
 -- CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
+-- Tipos ENUM alinhados com os modelos Sequelize
+DO $$ BEGIN
+  CREATE TYPE "enum_usuarios_role" AS ENUM('admin', 'funcionario');
+EXCEPTION WHEN duplicate_object THEN null;
+END $$;
+
+DO $$ BEGIN
+  CREATE TYPE "enum_agendamentos_status" AS ENUM('agendado', 'confirmado', 'concluido', 'cancelado');
+EXCEPTION WHEN duplicate_object THEN null;
+END $$;
+
 -- ============================================================
 -- TABELA: usuarios
 -- Funcionários e admins do sistema
@@ -15,8 +26,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
     nome        VARCHAR(100) NOT NULL,
     email       VARCHAR(150) NOT NULL UNIQUE,
     senha       VARCHAR(255) NOT NULL,
-    role        VARCHAR(20) NOT NULL DEFAULT 'funcionario'
-                    CHECK (role IN ('admin', 'funcionario')),
+    role        "enum_usuarios_role" NOT NULL DEFAULT 'funcionario',
     "createdAt" TIMESTAMPTZ DEFAULT NOW(),
     "updatedAt" TIMESTAMPTZ DEFAULT NOW()
 );
@@ -59,8 +69,7 @@ CREATE TABLE IF NOT EXISTS agendamentos (
     cliente_id   INTEGER NOT NULL REFERENCES clientes(id) ON DELETE RESTRICT,
     usuario_id   INTEGER NOT NULL REFERENCES usuarios(id) ON DELETE RESTRICT,
     data_hora    TIMESTAMPTZ NOT NULL,
-    status       VARCHAR(20) NOT NULL DEFAULT 'agendado'
-                     CHECK (status IN ('agendado','confirmado','concluido','cancelado')),
+    status       "enum_agendamentos_status" NOT NULL DEFAULT 'agendado',
     observacao   TEXT,
     valor_total  DECIMAL(10,2),
     "createdAt"  TIMESTAMPTZ DEFAULT NOW(),

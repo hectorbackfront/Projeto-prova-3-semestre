@@ -4,11 +4,11 @@
 
 -- Usuários (funcionários e admin)
 INSERT INTO usuarios (nome, email, senha, role) VALUES
-('Admin Sistema',    'admin@salao.com',      '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lh7y', 'admin'),
-('Ana Lima',         'ana@salao.com',         '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lh7y', 'funcionario'),
-('Beatriz Souza',    'beatriz@salao.com',     '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lh7y', 'funcionario'),
-('Carlos Pereira',   'carlos@salao.com',      '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lh7y', 'funcionario'),
-('Daniela Costa',    'daniela@salao.com',     '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lh7y', 'funcionario');
+('Admin Sistema',    'admin@salao.com',      '$2a$10$wUgNgHgq2pgHeNUNJGKLsO51NM/Y5BUBXe4Q6MA0jcagwx/3aD7l.', 'admin'),
+('Ana Lima',         'ana@salao.com',         '$2a$10$wUgNgHgq2pgHeNUNJGKLsO51NM/Y5BUBXe4Q6MA0jcagwx/3aD7l.', 'funcionario'),
+('Beatriz Souza',    'beatriz@salao.com',     '$2a$10$wUgNgHgq2pgHeNUNJGKLsO51NM/Y5BUBXe4Q6MA0jcagwx/3aD7l.', 'funcionario'),
+('Carlos Pereira',   'carlos@salao.com',      '$2a$10$wUgNgHgq2pgHeNUNJGKLsO51NM/Y5BUBXe4Q6MA0jcagwx/3aD7l.', 'funcionario'),
+('Daniela Costa',    'daniela@salao.com',     '$2a$10$wUgNgHgq2pgHeNUNJGKLsO51NM/Y5BUBXe4Q6MA0jcagwx/3aD7l.', 'funcionario');
 -- Senha padrão: "senha123"
 
 -- Serviços

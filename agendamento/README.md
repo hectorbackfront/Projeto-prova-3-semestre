@@ -193,6 +193,18 @@ A documentação lista todas as rotas disponíveis com exemplos de request e res
 | POST | `/api/agendamentos/:agendamento_id/servicos/:servico_id` | Adiciona serviço ao agendamento (tabela pivô) |
 | DELETE | `/api/agendamentos/:agendamento_id/servicos/:servico_id` | Remove serviço do agendamento (tabela pivô) |
 
+> **Atenção:** o campo `servico_ids` é obrigatório ao criar um agendamento. Exemplo de body:
+>
+> ```json
+> {
+>   "cliente_id": 1,
+>   "usuario_id": 2,
+>   "data_hora": "2026-08-01T10:00:00Z",
+>   "observacao": "Opcional",
+>   "servico_ids": [1, 2]
+> }
+> ```
+
 ### Autenticação
 
 | Método | Rota | Ação |
