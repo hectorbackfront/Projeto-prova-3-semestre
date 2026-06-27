@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="550" viewBox="0 0 1000 550" font-family="Arial, sans-serif">
+  <rect width="1000" height="550" fill="#f8f9fa"/>
+
+  <text x="500" y="32" text-anchor="middle" font-size="16" font-weight="bold" fill="#1a1a2e">Modelo Lógico — Sistema de Agendamentos</text>
+
+  <defs>
+    <marker id="fk-arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#e74c3c"/>
+    </marker>
+  </defs>
+
+  <!-- ================================================================ -->
+  <!-- USUARIOS (x=15, y=55, w=255, h=145) -->
+  <!-- ================================================================ -->
+  <rect x="15" y="55" width="255" height="145" rx="4" fill="white" stroke="#bdc3c7" stroke-width="1.5"/>
+  <rect x="15" y="55" width="255" height="35" rx="4" fill="#2c3e50"/>
+  <rect x="15" y="75" width="255" height="15" fill="#2c3e50"/>
+  <text x="142" y="78" text-anchor="middle" font-size="13" font-weight="bold" fill="white">USUARIOS</text>
+
+  <rect x="15" y="90" width="255" height="22" fill="#fff9c4"/>
+  <text x="22" y="105" font-size="11" font-weight="bold" fill="#c0392b">PK</text>
+  <text x="40" y="105" font-size="11" fill="#1a1a2e">id</text>
+  <text x="175" y="105" font-size="11" fill="#636e72">SERIAL</text>
+
+  <rect x="15" y="112" width="255" height="22" fill="white"/>
+  <text x="22" y="127" font-size="11" fill="#1a1a2e">nome</text>
+  <text x="175" y="127" font-size="11" fill="#636e72">VARCHAR(100)</text>
+
+  <rect x="15" y="134" width="255" height="22" fill="#f8f9fa"/>
+  <text x="22" y="149" font-size="11" fill="#1a1a2e">email</text>
+  <text x="58" y="149" font-size="9" fill="#e67e22">UNIQUE</text>
+  <text x="175" y="149" font-size="11" fill="#636e72">VARCHAR(150)</text>
+
+  <rect x="15" y="156" width="255" height="22" fill="white"/>
+  <text x="22" y="171" font-size="11" fill="#1a1a2e">senha</text>
+  <text x="175" y="171" font-size="11" fill="#636e72">VARCHAR(255)</text>
+
+  <rect x="15" y="178" width="255" height="22" fill="#f8f9fa"/>
+  <text x="22" y="193" font-size="11" fill="#1a1a2e">role</text>
+  <text x="175" y="193" font-size="11" fill="#636e72">ENUM</text>
+
+  <line x1="15" y1="112" x2="270" y2="112" stroke="#ecf0f1" stroke-width="1"/>
+  <line x1="15" y1="134" x2="270" y2="134" stroke="#ecf0f1" stroke-width="1"/>
+  <line x1="15" y1="156" x2="270" y2="156" stroke="#ecf0f1" stroke-width="1"/>
+  <line x1="15" y1="178" x2="270" y2="178" stroke="#ecf0f1" stroke-width="1"/>
+
+  <!-- ================================================================ -->
+  <!-- CLIENTES (x=15, y=370, w=255, h=145) -->
+  <!-- ================================================================ -->
+  <rect x="15" y="370" width="255" height="145" rx="4" fill="white" stroke="#bdc3c7" stroke-width="1.5"/>
+  <rect x="15" y="370" width="255" height="35" rx="4" fill="#2c3e50"/>
+  <rect x="15" y="390" width="255" height="15" fill="#2c3e50"/>
+  <text x="142" y="393" text-anchor="middle" font-size="13" font-weight="bold" fill="white">CLIENTES</text>
+
+  <rect x="15" y="405" width="255" height="22" fill="#fff9c4"/>
+  <text x="22" y="420" font-size="11" font-weight="bold" fill="#c0392b">PK</text>
+  <text x="40" y="420" font-size="11" fill="#1a1a2e">id</text>
+  <text x="175" y="420" font-size="11" fill="#636e72">SERIAL</text>
+
+  <rect x="15" y="427" width="255" height="22" fill="white"/>
+  <text x="22" y="442" font-size="11" fill="#1a1a2e">nome</text>
+  <text x="175" y="442" font-size="11" fill="#636e72">VARCHAR(100)</text>
+
+  <rect x="15" y="449" width="255" height="22" fill="#f8f9fa"/>
+  <text x="22" y="464" font-size="11" fill="#1a1a2e">telefone</text>
+  <text x="175" y="464" font-size="11" fill="#636e72">VARCHAR(20)</text>
+
+  <rect x="15" y="471" width="255" height="22" fill="white"/>
+  <text x="22" y="486" font-size="11" fill="#1a1a2e">cpf</text>
+  <text x="44" y="486" font-size="9" fill="#e67e22">UNIQUE</text>
+  <text x="175" y="486" font-size="11" fill="#636e72">VARCHAR(14)</text>
+
+  <rect x="15" y="493" width="255" height="22" fill="#f8f9fa"/>
+  <text x="22" y="508" font-size="11" fill="#1a1a2e">email</text>
+  <text x="175" y="508" font-size="11" fill="#636e72">VARCHAR(150)</text>
+
+  <line x1="15" y1="427" x2="270" y2="427" stroke="#ecf0f1" stroke-width="1"/>
+  <line x1="15" y1="449" x2="270" y2="449" stroke="#ecf0f1" stroke-width="1"/>
+  <line x1="15" y1="471" x2="270" y2="471" stroke="#ecf0f1" stroke-width="1"/>
+  <line x1="15" y1="493" x2="270" y2="493" stroke="#ecf0f1" stroke-width="1"/>
+
+  <!-- ================================================================ -->
+  <!-- AGENDAMENTOS (x=330, y=200, w=295, h=189) -->
+  <!-- ================================================================ -->
+  <rect x="330" y="200" width="295" height="189" rx="4" fill="white" stroke="#bdc3c7" stroke-width="1.5"/>
+  <rect x="330" y="200" width="295" height="35" rx="4" fill="#2c3e50"/>
+  <rect x="330" y="220" width="295" height="15" fill="#2c3e50"/>
+  <text x="477" y="223" text-anchor="middle" font-size="13" font-weight="bold" fill="white">AGENDAMENTOS</text>
+
+  <rect x="330" y="235" width="295" height="22" fill="#fff9c4"/>
+  <text x="337" y="250" font-size="11" font-weight="bold" fill="#c0392b">PK</text>
+  <text x="355" y="250" font-size="11" fill="#1a1a2e">id</text>
+  <text x="530" y="250" font-size="11" fill="#636e72">SERIAL</text>
+
+  <rect x="330" y="257" width="295" height="22" fill="#dbeafe"/>
+  <text x="337" y="272" font-size="11" font-weight="bold" fill="#1d4ed8">FK</text>
+  <text x="355" y="272" font-size="11" fill="#1a1a2e">cliente_id</text>
+  <text x="530" y="272" font-size="11" fill="#636e72">→ clientes.id</text>
+
+  <rect x="330" y="279" width="295" height="22" fill="#dbeafe"/>
+  <text x="337" y="294" font-size="11" font-weight="bold" fill="#1d4ed8">FK</text>
+  <text x="355" y="294" font-size="11" fill="#1a1a2e">usuario_id</text>
+  <text x="530" y="294" font-size="11" fill="#636e72">→ usuarios.id</text>
+
+  <rect x="330" y="301" width="295" height="22" fill="white"/>
+  <text x="337" y="316" font-size="11" fill="#1a1a2e">data_hora</text>
+  <text x="530" y="316" font-size="11" fill="#636e72">TIMESTAMPTZ</text>
+
+  <rect x="330" y="323" width="295" height="22" fill="#f8f9fa"/>
+  <text x="337" y="338" font-size="11" fill="#1a1a2e">status</text>
+  <text x="530" y="338" font-size="11" fill="#636e72">ENUM</text>
+
+  <rect x="330" y="345" width="295" height="22" fill="white"/>
+  <text x="337" y="360" font-size="11" fill="#1a1a2e">observacao</text>
+  <text x="530" y="360" font-size="11" fill="#636e72">TEXT</text>
+
+  <rect x="330" y="367" width="295" height="22" fill="#f8f9fa"/>
+  <text x="337" y="382" font-size="11" fill="#1a1a2e">valor_total</text>
+  <text x="530" y="382" font-size="11" fill="#636e72">DECIMAL(10,2)</text>
+
+  <line x1="330" y1="257" x2="625" y2="257" stroke="#ecf0f1" stroke-width="1"/>
+  <line x1="330" y1="279" x2="625" y2="279" stroke="#ecf0f1" stroke-width="1"/>
+  <line x1="330" y1="301" x2="625" y2="301" stroke="#ecf0f1" stroke-width="1"/>
+  <line x1="330" y1="323" x2="625" y2="323" stroke="#ecf0f1" stroke-width="1"/>
+  <line x1="330" y1="345" x2="625" y2="345" stroke="#ecf0f1" stroke-width="1"/>
+  <line x1="330" y1="367" x2="625" y2="367" stroke="#ecf0f1" stroke-width="1"/>
+
+  <!-- ================================================================ -->
+  <!-- SERVICOS (x=700, y=55, w=265, h=167) -->
+  <!-- ================================================================ -->
+  <rect x="700" y="55" width="265" height="167" rx="4" fill="white" stroke="#bdc3c7" stroke-width="1.5"/>
+  <rect x="700" y="55" width="265" height="35" rx="4" fill="#2c3e50"/>
+  <rect x="700" y="75" width="265" height="15" fill="#2c3e50"/>
+  <text x="832" y="78" text-anchor="middle" font-size="13" font-weight="bold" fill="white">SERVICOS</text>
+
+  <rect x="700" y="90" width="265" height="22" fill="#fff9c4"/>
+  <text x="707" y="105" font-size="11" font-weight="bold" fill="#c0392b">PK</text>
+  <text x="725" y="105" font-size="11" fill="#1a1a2e">id</text>
+  <text x="860" y="105" font-size="11" fill="#636e72">SERIAL</text>
+
+  <rect x="700" y="112" width="265" height="22" fill="white"/>
+  <text x="707" y="127" font-size="11" fill="#1a1a2e">nome</text>
+  <text x="860" y="127" font-size="11" fill="#636e72">VARCHAR(100)</text>
+
+  <rect x="700" y="134" width="265" height="22" fill="#f8f9fa"/>
+  <text x="707" y="149" font-size="11" fill="#1a1a2e">descricao</text>
+  <text x="860" y="149" font-size="11" fill="#636e72">TEXT</text>
+
+  <rect x="700" y="156" width="265" height="22" fill="white"/>
+  <text x="707" y="171" font-size="11" fill="#1a1a2e">preco</text>
+  <text x="860" y="171" font-size="11" fill="#636e72">DECIMAL(10,2)</text>
+
+  <rect x="700" y="178" width="265" height="22" fill="#f8f9fa"/>
+  <text x="707" y="193" font-size="11" fill="#1a1a2e">duracao_min</text>
+  <text x="860" y="193" font-size="11" fill="#636e72">INTEGER</text>
+
+  <rect x="700" y="200" width="265" height="22" fill="white"/>
+  <text x="707" y="215" font-size="11" fill="#1a1a2e">ativo</text>
+  <text x="860" y="215" font-size="11" fill="#636e72">BOOLEAN</text>
+
+  <line x1="700" y1="112" x2="965" y2="112" stroke="#ecf0f1" stroke-width="1"/>
+  <line x1="700" y1="134" x2="965" y2="134" stroke="#ecf0f1" stroke-width="1"/>
+  <line x1="700" y1="156" x2="965" y2="156" stroke="#ecf0f1" stroke-width="1"/>
+  <line x1="700" y1="178" x2="965" y2="178" stroke="#ecf0f1" stroke-width="1"/>
+  <line x1="700" y1="200" x2="965" y2="200" stroke="#ecf0f1" stroke-width="1"/>
+
+  <!-- ================================================================ -->
+  <!-- AGENDAMENTO_SERVICOS (x=700, y=370, w=265, h=123) -->
+  <!-- ================================================================ -->
+  <rect x="700" y="370" width="265" height="123" rx="4" fill="white" stroke="#6c3483" stroke-width="2"/>
+  <rect x="700" y="370" width="265" height="35" rx="4" fill="#6c3483"/>
+  <rect x="700" y="390" width="265" height="15" fill="#6c3483"/>
+  <text x="832" y="393" text-anchor="middle" font-size="12" font-weight="bold" fill="white">AGENDAMENTO_SERVICOS</text>
+
+  <rect x="700" y="405" width="265" height="22" fill="#fff9c4"/>
+  <text x="707" y="420" font-size="11" font-weight="bold" fill="#c0392b">PK</text>
+  <text x="725" y="420" font-size="11" fill="#1a1a2e">id</text>
+  <text x="860" y="420" font-size="11" fill="#636e72">SERIAL</text>
+
+  <rect x="700" y="427" width="265" height="22" fill="#dbeafe"/>
+  <text x="707" y="442" font-size="11" font-weight="bold" fill="#1d4ed8">FK</text>
+  <text x="725" y="442" font-size="11" fill="#1a1a2e">agendamento_id</text>
+  <text x="860" y="442" font-size="11" fill="#636e72">→ agend.id</text>
+
+  <rect x="700" y="449" width="265" height="22" fill="#dbeafe"/>
+  <text x="707" y="464" font-size="11" font-weight="bold" fill="#1d4ed8">FK</text>
+  <text x="725" y="464" font-size="11" fill="#1a1a2e">servico_id</text>
+  <text x="860" y="464" font-size="11" fill="#636e72">→ servicos.id</text>
+
+  <rect x="700" y="471" width="265" height="22" fill="#f8f9fa"/>
+  <text x="707" y="486" font-size="11" fill="#1a1a2e">preco_aplicado</text>
+  <text x="860" y="486" font-size="11" fill="#636e72">DECIMAL(10,2)</text>
+
+  <line x1="700" y1="427" x2="965" y2="427" stroke="#d9c4e8" stroke-width="1"/>
+  <line x1="700" y1="449" x2="965" y2="449" stroke="#d9c4e8" stroke-width="1"/>
+  <line x1="700" y1="471" x2="965" y2="471" stroke="#d9c4e8" stroke-width="1"/>
+
+  <!-- ================================================================ -->
+  <!-- FK CONNECTOR LINES (dashed red) -->
+  <!-- ================================================================ -->
+
+  <!-- usuario_id → USUARIOS.id -->
+  <!-- From AGENDAMENTOS left (330) at row center y=290, to USUARIOS right (270) at row id center y=101 -->
+  <path d="M330,290 L280,290 L280,101 L270,101" fill="none" stroke="#e74c3c" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#fk-arrow)"/>
+
+  <!-- cliente_id → CLIENTES.id -->
+  <!-- From AGENDAMENTOS left (330) at row center y=268, to CLIENTES right (270) at row id center y=416 -->
+  <path d="M330,268 L295,268 L295,416 L270,416" fill="none" stroke="#e74c3c" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#fk-arrow)"/>
+
+  <!-- agendamento_id → AGENDAMENTOS.id -->
+  <!-- From AGDS left (700) at row center y=438, to AGENDAMENTOS right (625) at row id center y=246 -->
+  <path d="M700,438 L660,438 L660,246 L625,246" fill="none" stroke="#e74c3c" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#fk-arrow)"/>
+
+  <!-- servico_id → SERVICOS.id -->
+  <!-- From AGDS right (965) at row center y=460, up to SERVICOS right (965) at row id center y=101 -->
+  <path d="M965,460 L980,460 L980,101 L965,101" fill="none" stroke="#e74c3c" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#fk-arrow)"/>
+
+  <!-- ================================================================ -->
+  <!-- LEGEND -->
+  <!-- ================================================================ -->
+  <rect x="330" y="520" width="12" height="12" rx="2" fill="#fff9c4" stroke="#ccc"/>
+  <text x="348" y="531" font-size="10" fill="#444">PK — Chave Primária</text>
+  <rect x="450" y="520" width="12" height="12" rx="2" fill="#dbeafe" stroke="#93c5fd"/>
+  <text x="468" y="531" font-size="10" fill="#444">FK — Chave Estrangeira</text>
+  <line x1="580" y1="526" x2="600" y2="526" stroke="#e74c3c" stroke-width="1.5" stroke-dasharray="4,2"/>
+  <text x="606" y="531" font-size="10" fill="#444">Referência FK</text>
+  <rect x="680" y="520" width="12" height="12" rx="2" fill="#6c3483"/>
+  <text x="698" y="531" font-size="10" fill="#444">Tabela pivô</text>
+</svg>
