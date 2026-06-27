@@ -27,7 +27,7 @@ services:
     environment:
       POSTGRES_DB: agendamento_db
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres123
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres123}
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./scripts/setup.sql:/docker-entrypoint-initdb.d/01_setup.sql
@@ -39,6 +39,10 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
 
   # ----------------------------------------------------------
   # CACHE (Redis)
@@ -56,6 +60,10 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
 
   # ----------------------------------------------------------
   # APP NODE.JS — sem porta exposta ao host (privado)
@@ -79,6 +87,13 @@ services:
     networks:
       - app_network
     # Sem 'ports' — acesso só via Nginx
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+      update_config:
+        parallelism: 1
+        delay: 10s
 
   # ----------------------------------------------------------
   # NGINX — proxy reverso, único ponto de entrada externo
@@ -95,3 +110,7 @@ services:
       - app
     networks:
       - app_network
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
