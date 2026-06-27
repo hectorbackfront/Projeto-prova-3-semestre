@@ -321,7 +321,17 @@ Para executar o pipeline, configure os seguintes secrets no repositório GitHub:
 
 ---
 
-## 9. Troubleshooting e Limpeza
+## 9. Vídeos de Apresentação
+
+| Parte | Membro | Tema | Link |
+|---|---|---|---|
+| P1 | Hector Marcelo Pedroso dos Santos (RA: 6125136) | Dockerfile + Docker Compose + Rede | [Assistir](https://youtu.be/rXl7rmR8kjA) |
+| P2 | Guilherme | Persistência + Segurança | Em breve |
+| P3 | Marcos | CI/CD + Swarm | Em breve |
+
+---
+
+## 10. Troubleshooting e Limpeza
 
 ### Problemas comuns
 
