@@ -217,7 +217,7 @@ docker compose ps
 ### 6.2 Inspecionar a rede bridge e confirmar DNS interno
 
 ```bash
-docker inspect app_network
+docker inspect agendamento_app_network
 ```
 
 A saída mostrará todos os contêineres conectados com seus nomes e IPs internos atribuídos automaticamente pelo Docker.
