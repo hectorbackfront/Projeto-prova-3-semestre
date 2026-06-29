@@ -1,10 +1,11 @@
 # ============================================================
-# REDE CUSTOMIZADA — Bridge com DNS interno (Opção A)
-# Os serviços se comunicam pelo nome (ex: postgres, redis)
+# REDE OVERLAY — compatível com Docker Swarm e docker compose
+# attachable: true permite containers avulsos se conectarem
 # ============================================================
 networks:
   app_network:
-    driver: bridge
+    driver: overlay
+    attachable: true
 
 # ============================================================
 # NAMED VOLUMES — persistência de dados além do ciclo do container
@@ -20,8 +21,6 @@ services:
   # ----------------------------------------------------------
   postgres:
     image: postgres:17-alpine
-    container_name: agendamento_postgres
-    restart: unless-stopped
     environment:
       POSTGRES_DB: agendamento_db
       POSTGRES_USER: postgres
@@ -46,8 +45,6 @@ services:
   # ----------------------------------------------------------
   redis:
     image: redis:7-alpine
-    container_name: agendamento_redis
-    restart: unless-stopped
     volumes:
       - redis_data:/data
     networks:
@@ -63,23 +60,24 @@ services:
 
   # ----------------------------------------------------------
   # APP NODE.JS — sem porta exposta ao host (privado)
+  # image: obrigatório para docker stack deploy usar a imagem local
+  # build: usado pelo docker compose build
   # ----------------------------------------------------------
   app:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: agendamento_app
-    restart: unless-stopped
-    env_file:
-      - .env.example
+    image: agendamento_app
     environment:
       DB_HOST: postgres
       DB_PORT: 5432
-    depends_on:
-      postgres:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
+      DB_NAME: agendamento_db
+      DB_USER: postgres
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-postgres123}
+      JWT_SECRET: supersecretjwtkey2024
+      JWT_EXPIRES_IN: 1d
+      PORT: 3000
+      NODE_ENV: development
     networks:
       - app_network
     # Sem 'ports' — acesso só via Nginx
@@ -95,14 +93,10 @@ services:
   # ----------------------------------------------------------
   nginx:
     image: nginx:alpine
-    container_name: agendamento_nginx
-    restart: unless-stopped
     ports:
       - "80:80"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-    depends_on:
-      - app
     networks:
       - app_network
     deploy:
