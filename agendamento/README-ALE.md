@@ -299,6 +299,7 @@ O arquivo `.github/workflows/docker-ecr.yml` implementa o pipeline completo:
 
 | Fase | O que faz |
 |---|---|
+| **Test** | Roda `npm test` (32 testes com Jest) — falha aqui aborta o pipeline |
 | **Build** | Gera a imagem otimizada via Dockerfile Multi-stage |
 | **Tag** | Versiona a imagem com o SHA do commit e `latest` |
 | **ECR Push** | Envia a imagem para o registro privado na AWS |

@@ -19,7 +19,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # 2. Configurar credenciais AWS via Secrets (nunca fixas no código)
+      # 2. Setup Node.js e rodar testes (falha aqui aborta o deploy)
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Instalar dependências e rodar testes
+        run: |
+          npm ci
+          npm test
+
+      # 3. Configurar credenciais AWS via Secrets (nunca fixas no código)
       - name: Configurar credenciais AWS
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -27,12 +39,12 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
-      # 3. Login no Amazon ECR
+      # 4. Login no Amazon ECR
       - name: Login no Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
-      # 4. BUILD — gera a imagem otimizada (Multi-stage Dockerfile)
+      # 5. BUILD — gera a imagem otimizada (Multi-stage Dockerfile)
       - name: Build da imagem Docker
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
@@ -43,7 +55,7 @@ jobs:
             --tag $ECR_REGISTRY/$ECR_REPOSITORY:latest \
             .
 
-      # 5. IMAGE GENERATION — tag com SHA do commit e latest
+      # 6. IMAGE GENERATION — tag com SHA do commit e latest
       - name: Exibir tags geradas
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
@@ -52,7 +64,7 @@ jobs:
           echo "Imagem: $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
           echo "Imagem: $ECR_REGISTRY/$ECR_REPOSITORY:latest"
 
-      # 6. ECR PUSH — envia a imagem para o registro privado da AWS
+      # 7. ECR PUSH — envia a imagem para o registro privado da AWS
       - name: Push para o Amazon ECR
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
@@ -62,7 +74,7 @@ jobs:
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
           echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
-      # 7. DEPLOYMENT — força atualização do serviço ECS com a nova imagem
+      # 8. DEPLOYMENT — força atualização do serviço ECS com a nova imagem
       - name: Deploy no Amazon ECS
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
