@@ -321,7 +321,49 @@ Para executar o pipeline, configure os seguintes secrets no repositório GitHub:
 
 ---
 
-## 9. Vídeos de Apresentação
+## 9. Testes Automatizados
+
+A suite de testes usa **Jest + Supertest** e cobre as rotas da API sem precisar de banco de dados ou Docker rodando — os modelos Sequelize e o Redis são simulados via mocks.
+
+### 9.1 Instalar dependências de teste
+
+```bash
+npm install
+```
+
+### 9.2 Rodar os testes
+
+```bash
+npm test
+```
+
+Resultado esperado:
+
+```
+Test Suites: 4 passed, 4 total
+Tests:       32 passed, 32 total
+```
+
+### 9.3 O que é testado
+
+| Arquivo | Testes | Cobertura |
+|---|---|---|
+| `tests/health.test.js` | 1 | Endpoint `/health` retorna `{ status: 'ok' }` |
+| `tests/auth.test.js` | 8 | Login válido/inválido, logout, blacklist JWT no Redis, middleware de auth |
+| `tests/clientes.test.js` | 10 | CRUD completo de clientes + 401 sem token + 404 + 409 CPF duplicado |
+| `tests/agendamentos.test.js` | 13 | CRUD de agendamentos + lock distribuído no Redis + conflito de horário |
+
+### 9.4 Por que não precisa do Docker
+
+Os testes utilizam `jest.mock()` para substituir:
+- `src/models` — evita qualquer conexão com o PostgreSQL
+- `src/config/redis` — evita conexão com o Redis
+
+Isso permite validar toda a lógica de negócio e as rotas de forma isolada, rápida e reproduzível em qualquer ambiente.
+
+---
+
+## 10. Vídeos de Apresentação
 
 | Parte | Membro | Tema | Link |
 |---|---|---|---|
@@ -331,7 +373,7 @@ Para executar o pipeline, configure os seguintes secrets no repositório GitHub:
 
 ---
 
-## 10. Troubleshooting e Limpeza
+## 11. Troubleshooting e Limpeza
 
 ### Problemas comuns
 
