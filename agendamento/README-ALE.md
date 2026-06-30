@@ -327,7 +327,7 @@ Para executar o pipeline, configure os seguintes secrets no repositório GitHub:
 |---|---|---|---|
 | P1 | Hector Marcelo Pedroso dos Santos (RA: 6125136) | Dockerfile + Docker Compose + Rede | [Assistir](https://youtu.be/rXl7rmR8kjA) |
 | P2 | Guilherme | Persistência + Segurança | [Assistir](https://youtu.be/aJKX0gdQWhw?si=nRwwlmtfVTN9sDjD) |
-| P3 | Marcos | CI/CD + Swarm | Em breve |
+| P3 | Marcos | CI/CD + Swarm | [Assistir](https://youtu.be/3fkza8NmT_A) |
 
 ---
 
