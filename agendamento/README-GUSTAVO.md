@@ -182,8 +182,8 @@ Os dados são coerentes com o domínio (salão de beleza): nomes realistas, CPFs
 | # | Membro | Tema | Link |
 |---|---|---|---|
 | P1 | Hector Marcelo (RA 6125136) | Arquitetura + DER + Modelo Lógico + Dicionário | [Assistir no YouTube](https://youtu.be/sckfRwoRYWo) |
-| P2 | Guilherme | DDL + Normalização + Seed | — |
-| P3 | Marcos | Índices + Consultas Críticas + Agregações | — |
+| P2 | Guilherme | DDL + Normalização + Seed | [Assistir no YouTube](https://youtu.be/7YVWjvHhlAQ) |
+| P3 | Marcos | Índices + Consultas Críticas + Agregações | [Assistir no YouTube](https://youtu.be/4lVhcHKYLmc) |
 
 ---
 
